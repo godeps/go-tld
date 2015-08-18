@@ -47,7 +47,7 @@ func Parse(s string) (*URL, error) {
 		//for binary search debugging...
 		// log.Printf("[%d - %d - %d] %s == %s (%s)", lo, mid, hi, string(dom[l-i]), string(guess[i]), guess)
 
-		if i < len(guess) && guess[i] == dom[l-i] {
+		if i < len(guess) && (l-i >= 0 && guess[i] == dom[l-i]) {
 			//store partial match
 			if i > tld && guess[i] == '.' {
 				tld = i
@@ -59,7 +59,7 @@ func Parse(s string) (*URL, error) {
 				tld = i
 				break
 			}
-		} else if i >= len(guess) || guess[i] < dom[l-i] {
+		} else if i >= len(guess) || (l-i >= 0 && guess[i] < dom[l-i]) {
 			lo = mid
 			i = 0
 		} else {
